@@ -15,3 +15,43 @@ PC Configuration: [ What i Have]
 sudo -i
 ```
 get root access,enter your password 
+
+```sh
+apt-get update 
+apt upgrade
+apt install -y mc
+```
+* REDUCE WAIT TIME FOR SYSTEM STARTUP MENU
+```sh
+nano /etc/default/grub
+```
+- change GRUB_DEFAULT=1
+- change GRUB_TIMEOUT=1
+save and exit nano
+```sh
+nano /boot/grub/grub.cfg
+```
+
+set timeout_style=menu
+if [ "${timeout}" = 0 ]; then
+  set timeout=1 
+fi
+
+save and exit nano
+
+* ENABLING SSH ROOT ACCESS
+```sh
+nano /etc/ssh/sshd_config
+```
+- PermitRootLogin yes
+
+save and Exit nano
+
+```sh
+service ssh restart
+
+sudo passwd root
+admin # type your password
+
+reboot
+```
