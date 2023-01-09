@@ -7,7 +7,7 @@ PC Configuration: [ What i Have]
 - 4 GB RAM
 - 16 GB SanDisk USB 3.1 , UBUNTU 22.12 Server has installed on it.
 
-# STEPS
+## STEPS
 * Installing Linux UBUNTU 22.12 on USB FLASH DISK
 - after installing of ubuntu has finishs
 
