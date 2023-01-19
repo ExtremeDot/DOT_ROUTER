@@ -114,31 +114,6 @@ else
 echo " you can test connection using these command"
 echo "bash /sstp/connect1.sh"
 fi
-
-echo ""
-echo "CLEAN INSTALL?"
-echo "Remove ALl Previous SE files?"
-echo ""
-until [[ $CLEAN_SETUP =~ (y|n) ]]; do
-read -rp "Clean SoftEther Setup? [y/n]: " -e -i y CLEAN_SETUP
-done
-
-if [[ $CLEAN_SETUP == "y" ]]; then
-	clear
-	echo ""
-	echo " Installing SoftEther CLEAN INSTALLATION"
-	/etc/init.d/vpnserver stop
-	sleep 2
-	rm -rf /usr/local/vpnserver/
-	rm -rf /usr/local/vpnserver/chain_certs/
-	rm /usr/local/vpnserver/vpn_server.config
-	rm /etc/init.d/vpnserver
-	echo "port=5353" > /etc/dnsmasq.conf
-	sleep 2
-else
-	echo " Installing SoftEther NORMAL INSTALLATION"
-fi
-
 ;;
 
 
