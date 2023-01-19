@@ -4,10 +4,10 @@ mkdir -p $DOTDIR
 #IF DEF VALS ARE AVAILABLE
 touch /sstp/defaults.sh
 cat <<EOF > /sstp/defaults.sh
-RED=\'\033[0;31m\'        # Red
-BLUE=\'\033[1;34m\'       # LIGHTBLUE
-GREEN=\'\033[0;32m\'      # Green
-NC=\'\033[0m\'            # No Color
+RED='\033[0;31m'        # Red
+BLUE='\033[1;34m'       # LIGHTBLUE
+GREEN='\033[0;32m'      # Green
+NC='\033[0m'            # No Color
 HOST_PING=8.8.8.8
 PINGTXT1=\`echo "-- PING Check: -----------------------------------------------" | cut -c 1-45\`
 INTFTXT1=\`echo "-- INTERFACE Check: -----------------------------------------------" | cut -c 1-45\`
@@ -15,7 +15,7 @@ INTFTXT1=\`echo "-- INTERFACE Check: -------------------------------------------
 EOF
 
 clear
-echo -e "\033[0;31m\G O L D E N   D O T   R O U T E R  - Version:1.014 \033[0m"
+echo -e "\033[0;31m\G O L D E N   D O T   R O U T E R  - Version:1.015 \033[0m "
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
