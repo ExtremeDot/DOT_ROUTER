@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.005"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.006"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -144,9 +144,9 @@ read -e -i "$PASSWORD2" -p "SSTP Client2: Please enter password: " input
 PASSWORD2="${input:-$PASSWORD2}"
 
 # Client2.sh
-touch /sstp/Client2.sh
+touch /sstp/client2.sh
 sleep 1
-cat <<EOF > /sstp/Client2.sh
+cat <<EOF > /sstp/client2.sh
 #!/bin/bash
 client_name2=$SSTPCONAME2
 user=$USERNAME2
@@ -158,13 +158,13 @@ sstpc --cert-warn --save-server-route --user \$user --password \$pass \$server:\
 
 EOF
 
-chmod +x /sstp/Client2.sh
+chmod +x /sstp/client2.sh
 
 # SSTP1 CONNECT2.SH
 touch /sstp/connect2.sh
 cat <<EOF > /sstp/connect2.sh
 #!/bin/bash
-CLIENT_FILE2=/sstp/Client2.sh
+CLIENT_FILE2=/sstp/client2.sh
 CLIENT_NAME2=\`sed -n -e '/client_name2/{s/.*= *//p}' \$CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'\`
 HOST_PING2=8.8.8.8
 echo " \$CLIENT_NAME2 ------------------------------------"
