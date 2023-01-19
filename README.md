@@ -10,9 +10,8 @@ PC Configuration: [ What i Have]
 ## AUto Scipted Menu
 cd /tmp
 curl -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
-chmod +x /tmp/main.sh
-mv /tmp/main.sh /bin/dotrouter
-chmod +x /bin/dotrouter
+
+mv /tmp/main.sh /bin/dotrouter && chmod +x /bin/dotrouter
 
 ## STEPS
 * Installing Linux UBUNTU 22.12 on USB FLASH DISK
