@@ -1,8 +1,21 @@
 #!/bin/bash
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
+#IF DEF VALS ARE AVAILABLE
+touch /sstp/defaults.sh
+cat <<EOF > /sstp/defaults.sh
+RED=\'\033[0;31m\'        # Red
+BLUE=\'\033[1;34m\'       # LIGHTBLUE
+GREEN=\'\033[0;32m\'      # Green
+NC=\'\033[0m\'            # No Color
+HOST_PING=8.8.8.8
+PINGTXT1=\`echo "-- PING Check: -----------------------------------------------" | cut -c 1-45\`
+INTFTXT1=\`echo "-- INTERFACE Check: -----------------------------------------------" | cut -c 1-45\`
+
+EOF
+
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.011"
+echo -e "'\033[0;31m'G O L D E N   D O T   R O U T E R  - Version:1.013"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -64,29 +77,27 @@ chmod +x /sstp/client1.sh
 touch /sstp/connect1.sh
 cat <<EOF > /sstp/connect1.sh
 #!/bin/bash
+source /sstp/defaults.sh
 CLIENT_FILE=/sstp/client1.sh
 CLIENT_NAME=\`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'\`
-HOST_PING=8.8.8.8
-echo " \$CLIENT_NAME ------------------------------------"
 
+echo ""
+echo -e "\${BLUE}[\$CLIENT_NAME] ---------------------------------------------- \${NC}" | cut -c 1-60
 HTT=\`ip address show label \$CLIENT_NAME | grep inet | awk '{print \$2}'\`
-if [ -n "\$HTT" ] ;
-        then
-                echo " \$CLIENT_NAME: Interface Check:           [OK]"
-
-                # check for pinging
-                PINGTEST=\`ping -I \$CLIENT_NAME -qc2 \$HOST_PING 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'\`
-                if [ \$PINGTEST = 1 ] ; then
-                                echo " \$CLIENT_NAME: PING Check:                        [OK]"
-                                exit
-                        else
-                                # IF NO RESPONCE
-                                echo " \$CLIENT_NAME: PING Check:                        [ERROR]"
-                fi
-
+if [ -n "\$HTT" ] ; then
+echo -e "\${GREEN}\$INTFTXT1 [OK]\${NC} "
+PINGTEST=\`ping -I \$CLIENT_NAME -qc2 \$HOST_PING | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'\`
+sleep 1
+if [ \$PINGTEST = 1 ] ; then
+echo -e "\${GREEN}\$PINGTXT1 [OK] \${NC}"
+exit
+else
+# IF NO RESPONCE
+echo -e "\${RED}\$PINGTXT1 [ER]\${NC}"
 fi
 
-echo " \$CLIENT_NAME: Interface Check:            [ERROR]"
+fi
+echo -e "\${RED}\$INTFTXT1 [ER]\${NC}"
 # IF NO RESPONCE
 # KILLING LAST CONNECTION IF EXISTS
 SSTPID1=\`ps -ef | grep sstpc | grep \$CLIENT_NAME | awk '{print \$2}'\`
