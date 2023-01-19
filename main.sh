@@ -35,11 +35,11 @@ SSTPORT1="443"
 read -e -i "$SSTPORT1" -p "SSTP CLient1: Please enter the SSTP Server Port: " input
 SSTPORT1="${input:-$SSTPORT1}"
 echo " "
-USERNAME1="name"
+USERNAME1=""
 read -e -i "$USERNAME1" -p "SSTP CLient1: Please enter username: " input
 USERNAME1="${input:-$USERNAME1}"
 echo " "
-PASSWORD1="pass"
+PASSWORD1=""
 read -e -i "$PASSWORD1" -p "SSTP CLient1: Please enter password: " input
 PASSWORD1="${input:-$PASSWORD1}"
 
@@ -65,7 +65,7 @@ touch /sstp/connect1.sh
 cat <<EOF > /sstp/connect1.sh
 #!/bin/bash
 CLIENT_FILE=/sstp/client1.sh
-CLIENT_NAME=`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'`
+CLIENT_NAME=\`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'\`
 HOST_PING=8.8.8.8
 echo " \$CLIENT_NAME ------------------------------------"
 HTT=ifconfig \$CLIENT_NAME 1</dev/null
