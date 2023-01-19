@@ -146,7 +146,7 @@ fi
 cd /tmp
 rm /tmp/main.sh
 sleep1
-curl -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
+curl -H 'Cache-Control: no-cache, no-store' -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
 chmod +x /tmp/main.sh
 mv /tmp/main.sh /bin/dotrouter
 chmod +x /bin/dotrouter
