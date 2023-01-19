@@ -114,8 +114,6 @@ else
 echo " you can test connection using these command"
 echo "bash /sstp/connect1.sh"
 fi
-;;
-
 
 echo ""
 echo "CLEAN INSTALL?"
@@ -141,6 +139,7 @@ else
 	echo " Installing SoftEther NORMAL INSTALLATION"
 fi
 
+;;
 
 
 # DHCP SERVER
