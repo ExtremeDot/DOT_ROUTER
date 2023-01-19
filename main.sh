@@ -15,7 +15,7 @@ INTFTXT1=\`echo "-- INTERFACE Check: -------------------------------------------
 EOF
 
 clear
-echo -e "\033[0;31m\G O L D E N   D O T   R O U T E R  - Version:1.015 \033[0m "
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.015 \033[0m "
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
