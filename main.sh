@@ -46,7 +46,7 @@ PASSWORD1="${input:-$PASSWORD1}"
 # CLIENT1.SH
 touch /sstp/client1.sh
 sleep 1
-cat <<EOF > /sstp/client1000.sh
+cat <<EOF > /sstp/client1.sh
 #!/bin/bash
 client_name=$SSTPCONAME1
 user=$USERNAME1
@@ -65,7 +65,7 @@ touch /sstp/connect1.sh
 cat <<EOF > /sstp/connect1.sh
 #!/bin/bash
 CLIENT_FILE=/sstp/client1.sh
-CLIENT_NAME=sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'
+CLIENT_NAME=`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'`
 HOST_PING=8.8.8.8
 echo " \$CLIENT_NAME ------------------------------------"
 HTT=ifconfig \$CLIENT_NAME 1</dev/null
