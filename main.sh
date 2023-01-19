@@ -68,13 +68,13 @@ CLIENT_FILE=/sstp/client1.sh
 CLIENT_NAME=\`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'\`
 HOST_PING=8.8.8.8
 echo " \$CLIENT_NAME ------------------------------------"
-HTT=ifconfig \$CLIENT_NAME 1</dev/null
-if \$HTT ;
+HTT2=`ip address show label \$CLIENT_NAME | grep inet | awk '{print $2}'`
+if [ -n "\$HTT" ] ;
         then
                 echo " \$CLIENT_NAME: Interface Check:           [OK]"
 
                 # check for pinging
-                PINGTEST=ping -I \$CLIENT_NAME -qc2 \$HOST_PING 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'
+                PINGTEST=\`ping -I \$CLIENT_NAME -qc2 \$HOST_PING 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'\`
                 if [ \$PINGTEST = 1 ] ; then
                                 echo " \$CLIENT_NAME: PING Check:                        [OK]"
                                 exit
@@ -168,13 +168,14 @@ CLIENT_FILE2=/sstp/client2.sh
 CLIENT_NAME2=\`sed -n -e '/client_name2/{s/.*= *//p}' \$CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'\`
 HOST_PING2=8.8.8.8
 echo " \$CLIENT_NAME2 ------------------------------------"
-HTT2=ifconfig \$CLIENT_NAME2 1</dev/null
-if \$HTT2 ;
+HTT2=\`ip address show label $CLIENT_NAME2 | grep inet | awk '{print $2}'\`
+if [ -n "\$HTT2" ] ;
+
         then
                 echo " \$CLIENT_NAME2: Interface Check:           [OK]"
 
                 # check for pinging
-                PINGTEST2=ping -I \$CLIENT_NAME2 -qc2 \$HOST_PING2 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'
+                PINGTEST2=\`ping -I \$CLIENT_NAME2 -qc2 \$HOST_PING2 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'\`
                 if [ \$PINGTEST2 = 1 ] ; then
                                 echo " \$CLIENT_NAME2: PING Check:                        [OK]"
                                 exit
