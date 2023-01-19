@@ -6,7 +6,7 @@ echo "G O L D E N   D O T   R O U T E R  - Version:1.004"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
-options=( "DHCP Server" "Install SSTP Client" "Setup SSTP Client1" "CLEAR" "UPDATE" "Quit")
+options=( "DHCP Server" "Install SSTP Client" "Setup SSTP Client1" "Setup SSTP Client2" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
 do
 case $opt in
@@ -115,6 +115,107 @@ echo " you can test connection using these command"
 echo "bash /sstp/connect1.sh"
 fi
 ;;
+
+################################
+# SETTING UP SSTP CLIENT 2
+"Setup SSTP Client2")
+mkdir -p /sstp
+cd /sstp
+
+echo " "
+SSTPCONAME2="sstp99"
+read -e -i "$SSTPCONAME2" -p "SSTP Client2: Please enter name for connection: " input
+SSTPCONAME2="${input:-$SSTPCONAME2}"
+echo " "
+SSTPIP2="78."
+read -e -i "$SSTPIP2" -p "SSTP Client2: Please enter the SSTP Server IP: " input
+SSTPIP2="${input:-$SSTPIP2}"
+echo " "
+SSTPORT2="443"
+read -e -i "$SSTPORT2" -p "SSTP Client2: Please enter the SSTP Server Port: " input
+SSTPORT2="${input:-$SSTPORT2}"
+echo " "
+USERNAME2=""
+read -e -i "$USERNAME2" -p "SSTP Client2: Please enter username: " input
+USERNAME2="${input:-$USERNAME2}"
+echo " "
+PASSWORD2=""
+read -e -i "$PASSWORD2" -p "SSTP Client2: Please enter password: " input
+PASSWORD2="${input:-$PASSWORD2}"
+
+# Client2.sh
+touch /sstp/Client2.sh
+sleep 1
+cat <<EOF > /sstp/Client2.sh
+#!/bin/bash
+client_name2=$SSTPCONAME2
+user=$USERNAME2
+pass=$PASSWORD2
+server=$SSTPIP2
+port=$SSTPORT2
+
+sstpc --cert-warn --save-server-route --user \$user --password \$pass \$server:\$port usepeerdns require-mschap-v2 noauth noipdefault ifname \$client_name2
+
+EOF
+
+chmod +x /sstp/Client2.sh
+
+# SSTP1 CONNECT2.SH
+touch /sstp/connect2.sh
+cat <<EOF > /sstp/connect2.sh
+#!/bin/bash
+CLIENT_FILE2=/sstp/Client2.sh
+CLIENT_NAME2=\`sed -n -e '/client_name2/{s/.*= *//p}' \$CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'\`
+HOST_PING2=8.8.8.8
+echo " \$CLIENT_NAME2 ------------------------------------"
+HTT2=ifconfig \$CLIENT_NAME2 1</dev/null
+if \$HTT2 ;
+        then
+                echo " \$CLIENT_NAME2: Interface Check:           [OK]"
+
+                # check for pinging
+                PINGTEST2=ping -I \$CLIENT_NAME2 -qc2 \$HOST_PING2 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'
+                if [ \$PINGTEST2 = 1 ] ; then
+                                echo " \$CLIENT_NAME2: PING Check:                        [OK]"
+                                exit
+                        else
+                                # IF NO RESPONCE
+                                echo " \$CLIENT_NAME2: PING Check:                        [ERROR]"
+                fi
+
+fi
+
+echo " \$CLIENT_NAME2: Interface Check:            [ERROR]"
+# IF NO RESPONCE
+# KILLING LAST CONNECTION IF EXISTS
+kill -9 ps -ef | grep sstpc | grep \$CLIENT_NAME2 | awk '{print \$2}'
+sleep 1
+
+echo "\$CLIENT_NAME2: STARTING SSTP CONNECTION"
+# RUNNING CONNECTING SCRIPT SILENTLY
+sudo bash \$CLIENT_FILE2 </dev/null &>/dev/null &
+
+EOF
+
+chmod +x /sstp/connect2.sh
+
+echo ""
+echo "Run SSTP Client2?"
+echo ""
+until [[ $SSTP2_RUN =~ (y|n) ]]; do
+read -rp "Run SSTP Connection: $SSTPCONAME2 ? [y/n]: " -e -i y SSTP2_RUN
+done
+
+if [[ $SSTP2_RUN == "y" ]]; then
+echo ""
+echo " Running $SSTPCONAME2 "
+bash /sstp/connect2.sh
+else
+echo " you can test connection using these command"
+echo "bash /sstp/connect2.sh"
+fi
+;;
+##############################
 
 
 # DHCP SERVER
