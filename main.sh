@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.008"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.009"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -87,12 +87,12 @@ fi
 echo " \$CLIENT_NAME: Interface Check:            [ERROR]"
 # IF NO RESPONCE
 # KILLING LAST CONNECTION IF EXISTS
-kill -9 ps -ef | grep sstpc | grep \$CLIENT_NAME | awk '{print \$2}'
+SSTPID1=\`ps -ef | grep sstpc | grep \$CLIENT_NAME | awk '{print \$2}'\`
+kill -9 \$SSTPID1
 sleep 1
-
 echo "\$CLIENT_NAME: STARTING SSTP CONNECTION"
 # RUNNING CONNECTING SCRIPT SILENTLY
-sudo bash \$CLIENT_FILE </dev/null &>/dev/null &
+bash \$CLIENT_FILE </dev/null &>/dev/null &
 
 EOF
 
@@ -188,12 +188,14 @@ fi
 echo " \$CLIENT_NAME2: Interface Check:            [ERROR]"
 # IF NO RESPONCE
 # KILLING LAST CONNECTION IF EXISTS
-kill -9 ps -ef | grep sstpc | grep \$CLIENT_NAME2 | awk '{print \$2}'
+# KILLING LAST CONNECTION IF EXISTS
+SSTPID2=\`ps -ef | grep sstpc | grep \$CLIENT_NAME2 | awk '{print \$2}'\`
+kill -9 \$SSTPID2
 sleep 1
 
 echo "\$CLIENT_NAME2: STARTING SSTP CONNECTION"
 # RUNNING CONNECTING SCRIPT SILENTLY
-sudo bash \$CLIENT_FILE2 </dev/null &>/dev/null &
+bash \$CLIENT_FILE2 </dev/null &>/dev/null &
 
 EOF
 
