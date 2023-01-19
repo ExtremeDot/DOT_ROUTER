@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.009"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.010"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -67,7 +67,7 @@ cat <<EOF > /sstp/connect1.sh
 CLIENT_FILE=/sstp/client1.sh
 CLIENT_NAME=\`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'\`
 echo " \$CLIENT_NAME ------------------------------------"
-HTT=\`ip address show label \$CLIENT_NAME | grep inet | awk '{print $2}'\`
+HTT=\`ip address show label \$CLIENT_NAME | grep inet | awk '{print \$2}'\`
 if [ -n "\$HTT" ] ;
         then
                 echo " \$CLIENT_NAME: Interface Check:           [OK]"
@@ -167,7 +167,7 @@ CLIENT_FILE2=/sstp/client2.sh
 CLIENT_NAME2=\`sed -n -e '/client_name2/{s/.*= *//p}' \$CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'\`
 HOST_PING2=8.8.8.8
 echo " \$CLIENT_NAME2 ------------------------------------"
-HTT2=\`ip address show label $CLIENT_NAME2 | grep inet | awk '{print $2}'\`
+HTT2=\`ip address show label $CLIENT_NAME2 | grep inet | awk '{print \$2}'\`
 if [ -n "\$HTT2" ] ;
 
         then
