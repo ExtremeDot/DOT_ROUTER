@@ -176,36 +176,32 @@ chmod +x /sstp/client2.sh
 touch /sstp/connect2.sh
 cat <<EOF > /sstp/connect2.sh
 #!/bin/bash
+source /sstp/defaults.sh
 CLIENT_FILE2=/sstp/client2.sh
-CLIENT_NAME2=\`sed -n -e '/client_name2/{s/.*= *//p}' \$CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'\`
-HOST_PING2=8.8.8.8
-echo " \$CLIENT_NAME2 ------------------------------------"
-HTT2=\`ip address show label $CLIENT_NAME2 | grep inet | awk '{print \$2}'\`
-if [ -n "\$HTT2" ] ;
+CLIENT_NAME2=\`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'\`
 
-        then
-                echo " \$CLIENT_NAME2: Interface Check:           [OK]"
-
-                # check for pinging
-                PINGTEST2=\`ping -I \$CLIENT_NAME2 -qc2 \$HOST_PING2 2>&1 | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'\`
-                if [ \$PINGTEST2 = 1 ] ; then
-                                echo " \$CLIENT_NAME2: PING Check:                        [OK]"
-                                exit
-                        else
-                                # IF NO RESPONCE
-                                echo " \$CLIENT_NAME2: PING Check:                        [ERROR]"
-                fi
-
+echo ""
+echo -e "\${BLUE}[\$CLIENT_NAME2] ---------------------------------------------- \${NC}" | cut -c 1-60
+HTT2=\`ip address show label \$CLIENT_NAME2 | grep inet | awk '{print \$2}'\`
+if [ -n "\$HTT2" ] ; then
+echo -e "\${GREEN}\$INTFTXT1 [OK]\${NC} "
+PINGTEST2=\`ping -I \$CLIENT_NAME2 -qc2 \$HOST_PING | awk -F'/' 'END{ print (/^rtt/? "1":"0") }'\`
+sleep 1
+if [ \$PINGTEST2 = 1 ] ; then
+echo -e "\${GREEN}\$PINGTXT1 [OK] \${NC}"
+exit
+else
+# IF NO RESPONCE
+echo -e "\${RED}\$PINGTXT1 [ER]\${NC}"
 fi
 
-echo " \$CLIENT_NAME2: Interface Check:            [ERROR]"
+fi
+echo -e "\${RED}\$INTFTXT1 [ER]\${NC}"
 # IF NO RESPONCE
-# KILLING LAST CONNECTION IF EXISTS
 # KILLING LAST CONNECTION IF EXISTS
 SSTPID2=\`ps -ef | grep sstpc | grep \$CLIENT_NAME2 | awk '{print \$2}'\`
 kill -9 \$SSTPID2
 sleep 1
-
 echo "\$CLIENT_NAME2: STARTING SSTP CONNECTION"
 # RUNNING CONNECTING SCRIPT SILENTLY
 bash \$CLIENT_FILE2 </dev/null &>/dev/null &
