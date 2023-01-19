@@ -102,13 +102,13 @@ chmod +x /sstp/connect1.sh
 echo ""
 echo "Run SSTP Client1?"
 echo ""
-until [[ \$SSTP1_RUN =~ (y|n) ]]; do
-read -rp "Run SSTP Connection: $CLIENT_NAME ? [y/n]: " -e -i y SSTP1_RUN
+until [[ $SSTP1_RUN =~ (y|n) ]]; do
+read -rp "Run SSTP Connection: $SSTPCONAME1 ? [y/n]: " -e -i y SSTP1_RUN
 done
 
 if [[ $SSTP1_RUN == "y" ]]; then
 echo ""
-echo " Running \$CLIENT_NAME "
+echo " Running $SSTPCONAME1 "
 bash /sstp/connect1.sh
 else
 echo " you can test connection using these command"
