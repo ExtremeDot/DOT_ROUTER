@@ -145,7 +145,7 @@ fi
 "UPDATE")
 cd /tmp
 rm /tmp/main.sh
-sleep1
+sleep 1
 curl -H 'Cache-Control: no-cache, no-store' -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
 chmod +x /tmp/main.sh
 mv /tmp/main.sh /bin/dotrouter
