@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.010"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.011"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -23,11 +23,11 @@ mkdir -p /sstp
 cd /sstp
 
 echo " "
-SSTPCONAME1="sstp88"
+SSTPCONAME1="sstp_"
 read -e -i "$SSTPCONAME1" -p "SSTP CLient1: Please enter name for connection: " input
 SSTPCONAME1="${input:-$SSTPCONAME1}"
 echo " "
-SSTPIP1="100.101.102.103"
+SSTPIP1="78."
 read -e -i "$SSTPIP1" -p "SSTP CLient1: Please enter the SSTP Server IP: " input
 SSTPIP1="${input:-$SSTPIP1}"
 echo " "
@@ -122,7 +122,7 @@ mkdir -p /sstp
 cd /sstp
 
 echo " "
-SSTPCONAME2="sstp99"
+SSTPCONAME2="sstp_"
 read -e -i "$SSTPCONAME2" -p "SSTP Client2: Please enter name for connection: " input
 SSTPCONAME2="${input:-$SSTPCONAME2}"
 echo " "
