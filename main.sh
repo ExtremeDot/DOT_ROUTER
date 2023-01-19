@@ -144,9 +144,11 @@ fi
 # CLEAR SCREEN
 "UPDATE")
 cd /tmp
+rm /tmp/main.sh
+sleep1
 curl -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
 chmod +x /tmp/main.sh
-cp /tmp/main.sh /bin/dotrouter
+mv /tmp/main.sh /bin/dotrouter
 chmod +x /bin/dotrouter
 exit 0
 ;;
