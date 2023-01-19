@@ -172,7 +172,7 @@ fi
 cd /tmp
 curl -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
 chmod +x /tmp/main.sh
-cp /tmp/MAIN.sh /bin/dotrouter
+cp /tmp/main.sh /bin/dotrouter
 chmod +x /bin/dotrouter
 exit 0
 ;;
