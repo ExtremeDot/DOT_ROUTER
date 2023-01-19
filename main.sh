@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - V 1.0"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.001"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -103,7 +103,7 @@ echo ""
 echo "Run SSTP Client1?"
 echo ""
 until [[ \$SSTP1_RUN =~ (y|n) ]]; do
-read -rp "Run SSTP Connection: \$CLIENT_NAME ? [y/n]: " -e -i y SSTP1_RUN
+read -rp "Run SSTP Connection: $CLIENT_NAME ? [y/n]: " -e -i y SSTP1_RUN
 done
 
 if [[ $SSTP1_RUN == "y" ]]; then
