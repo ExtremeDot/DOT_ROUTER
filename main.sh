@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.007"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.008"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
@@ -66,9 +66,8 @@ cat <<EOF > /sstp/connect1.sh
 #!/bin/bash
 CLIENT_FILE=/sstp/client1.sh
 CLIENT_NAME=\`sed -n -e '/client_name/{s/.*= *//p}' \$CLIENT_FILE | sed  's/.*"\(.*\)".*/\1/'\`
-HOST_PING=8.8.8.8
 echo " \$CLIENT_NAME ------------------------------------"
-HTT2=`ip address show label \$CLIENT_NAME | grep inet | awk '{print $2}'`
+HTT=\`ip address show label \$CLIENT_NAME | grep inet | awk '{print $2}'\`
 if [ -n "\$HTT" ] ;
         then
                 echo " \$CLIENT_NAME: Interface Check:           [OK]"
