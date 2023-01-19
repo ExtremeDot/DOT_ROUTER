@@ -2,7 +2,7 @@
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 clear
-echo "G O L D E N   D O T   R O U T E R  - Version:1.006"
+echo "G O L D E N   D O T   R O U T E R  - Version:1.007"
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
