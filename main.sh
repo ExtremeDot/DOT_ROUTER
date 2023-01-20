@@ -21,7 +21,7 @@ GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
 echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.022 \033[0m "
-echo "-----------------------------------------------------"
+echo "======================================================"
 echo "Application Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 SSTPCVERSION=`sstpc -version | head -n 1`
