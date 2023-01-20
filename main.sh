@@ -20,8 +20,8 @@ BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.023  "
-echo "====================================================== \033[0m"
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.024  "
+echo "======================================================"
 echo -e "${YELLOW} Application Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 SSTPCVERSION=`sstpc -version | head -n 1`
@@ -30,13 +30,13 @@ V2RAYVERSION=`v2ray version | head -n 1`
 BADVPNVERSION=`badvpn-tun2socks --version | head -n 1`
 TUN2SOCKSVERSION=`tun2socks -version | head -n 1`
 LOADBALANCERVERSION=`load_balance.pl -V`
-echo -e "${GREEN}    $SSTPCVERSION${NC} "
+echo -e "${GREEN}    $SSTPCVERSION "
 echo -e "    $XRAYVERSION"
 echo -e "    $V2RAYVERSION"
 echo -e "    $BADVPNVERSION"
 echo -e "    $TUN2SOCKSVERSION"
 echo -e "    Load Balancer $LOADBALANCERVERSION ${NC}"
-echo "    -------------------------------------------------"
+echo " ----------------------------------------------------"
 echo -e "${YELLOW} Clients Status"
 #SSTP1
 CLIENT_FILE1=/sstp/client1.sh
@@ -50,8 +50,8 @@ if [ -n "$HTT2" ] ; then echo -e "${GREEN}    $CLIENT_NAME2 [OK RUNNING]${NC} " 
 V2RAYSTATUS=`systemctl status v2ray | grep Active | cut -c 14-100`
 XRAYSTATUS=`systemctl status xray | grep Active | cut -c 14-100`
 echo -e "${GREEN}    V2RAY: $V2RAYSTATUS"
-echo -e "${GREEN}    XRAY: $V2RAYSTATUS"
-echo " ---------------------------------------------------"
+echo -e "${GREEN}    XRAY: $V2RAYSTATUS ${NC}"
+echo " ----------------------------------------------------"
 echo ""
 options=( "Installing DHCP Server" "Install All Clients, SSTP V2ray Xray BadVPN tun2socks" "Install LoadBalancer" "Setup SSTP Client Number 1" "Setup SSTP Client Number 2" "Setup V2ray Client" "V2Ray Config Editor" "XRay Config Editor" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
