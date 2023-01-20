@@ -20,7 +20,7 @@ BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.024  "
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.025  "
 echo "======================================================"
 echo -e "${YELLOW} Application Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
@@ -53,10 +53,59 @@ echo -e "${GREEN}    V2RAY: $V2RAYSTATUS"
 echo -e "${GREEN}    XRAY: $V2RAYSTATUS ${NC}"
 echo " ----------------------------------------------------"
 echo ""
-options=( "Installing DHCP Server" "Install All Clients, SSTP V2ray Xray BadVPN tun2socks" "Install LoadBalancer" "Setup SSTP Client Number 1" "Setup SSTP Client Number 2" "Setup V2ray Client" "V2Ray Config Editor" "XRay Config Editor" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
+options=( "Installing DHCP Server" "Install All Clients, SSTP V2ray Xray BadVPN tun2socks" "Install LoadBalancer" "Setup SSTP Client Number 1" "Setup SSTP Client Number 2" "Setup V2ray Client" "V2Ray Config Editor" "XRay Config Editor" "LoadBalancer Config" "SSTP1-CHECK" "SSTP2-CHECK" "V2RAY-CHECK" "XRAY-CHECK" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
 do
 case $opt in
+
+"SSTP1-CHECK")
+clear
+SSTP1PING=`curl --connect-timeout 20 --interface $CLIENT_NAME1 -o /dev/null -s -w 'Total: %{time_total}s\n' google.com | cut -c 7-20`
+SSTP1IP=`curl --silent --connect-timeout 20 --interface $CLIENT_NAME1 -4 myip.wtf/json | grep YourFuckingIPAddress | sed  's/.*"\(.*\)".*/\1/'`
+SSTP1LOCATION=`curl --silent --connect-timeout 20 --interface $CLIENT_NAME1 -4 myip.wtf/json | grep YourFuckingLocation | sed  's/.*"\(.*\)".*/\1/'`
+echo "" ; echo -e "${YELLOW}Connection Name [SSTP1]= $CLIENT_NAME1" ;echo ""
+echo -e "${RED}IP=$SSTP1IP ${GREEN}IP Location=$SSTP1LOCATION "
+echo -e "${BLUE}Ping to Google=$SSTP1PING ${NC}" ; echo ""
+;;
+
+"SSTP2-CHECK")
+clear
+SSTP2PING=`curl --connect-timeout 20 --interface $CLIENT_NAME2 -o /dev/null -s -w 'Total: %{time_total}s\n' google.com | cut -c 7-20`
+SSTP2IP=`curl --silent --connect-timeout 20 --interface $CLIENT_NAME2 -4 myip.wtf/json | grep YourFuckingIPAddress | sed  's/.*"\(.*\)".*/\1/'`
+SSTP2LOCATION=`curl --silent --connect-timeout 20 --interface $CLIENT_NAME2 -4 myip.wtf/json | grep YourFuckingLocation | sed  's/.*"\(.*\)".*/\1/'`
+echo "" ; echo -e "${YELLOW}Connection Name [SSTP2]= $CLIENT_NAME2" ;echo ""
+echo -e "${RED}IP=$SSTP2IP ${GREEN}IP Location=$SSTP2LOCATION "
+echo -e "${BLUE}Ping to Google=$SSTP2PING ${NC}" ; echo ""
+;;
+
+"V2RAY-CHECK")
+clear
+echo ""
+V2RAYPORT=10808
+read -e -i "$V2RAYPORT" -p "Enter The V2ray Running Local Port: " input
+V2RAYPORT="${input:-$V2RAYPORT}"
+V2RAYPING=`curl --silent --connect-timeout 20 --socks5 socks5://localhost:$V2RAYPORT -o /dev/null -s -w 'Total: %{time_total}s\n' google.com | cut -c 7-20`
+V2RAYIP=`curl --silent --connect-timeout 20 --socks5 socks5://localhost:$V2RAYPORT https://myip.wtf/json | grep YourFuckingIPAddress | sed  's/.*"\(.*\)".*/\1/'`
+V2RAYLOCATION=`curl --silent --connect-timeout 20 --socks5 socks5://localhost:$V2RAYPORT https://myip.wtf/json | grep YourFuckingLocation | sed  's/.*"\(.*\)".*/\1/'`
+echo "" ; echo -e "${YELLOW}Connection Name [V2RAY]= NEEDUPDATE" ;echo ""
+echo -e "${RED}IP=$V2RAYIP ${GREEN}IP Location=$V2RAYLOCATION "
+echo -e "${BLUE}Ping to Google=$V2RAYPING ${NC}" ; echo ""
+;;
+
+"XRAY-CHECK")
+clear
+echo ""
+XRAYPORT=20808
+read -e -i "$XRAYPORT" -p "Enter The X-ray Running Local Port: " input
+XRAYPORT="${input:-$XRAYPORT}"
+XRAYPING=`curl --silent --connect-timeout 20 --socks5 socks5://localhost:$XRAYPORT -o /dev/null -s -w 'Total: %{time_total}s\n' google.com | cut -c 7-20`
+XRAYIP=`curl --silent --connect-timeout 20 --socks5 socks5://localhost:$XRAYPORT https://myip.wtf/json | grep YourFuckingIPAddress | sed  's/.*"\(.*\)".*/\1/'`
+XRAYLOCATION=`curl --silent --connect-timeout 20 --socks5 socks5://localhost:$XRAYPORT https://myip.wtf/json | grep YourFuckingLocation | sed  's/.*"\(.*\)".*/\1/'`
+echo "" ; echo -e "${YELLOW}Connection Name [X-RAY]= NEEDUPDATE" ;echo ""
+echo -e "${RED}IP=$XRAYIP ${GREEN}IP Location=$XRAYLOCATION "
+echo -e "${BLUE}Ping to Google=$XRAYPING ${NC}" ; echo ""
+;;
+
 
 "V2Ray Config")
 nano /usr/local/etc/v2ray/config.json
