@@ -13,17 +13,25 @@ PINGTXT1=\`echo "-- PING Check: -----------------------------------------------"
 INTFTXT1=\`echo "-- INTERFACE Check: -----------------------------------------------" | cut -c 1-45\`
 
 EOF
+YELLOW="\[\033[0;33m\]"	# YELLOW
 RED='\033[0;31m'        # Red
 BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
+
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.016 \033[0m "
-echo "----------------------------------------"
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.017 \033[0m "
+echo "-----------------------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
+SSTPCVERSION=`sstpc -version`
 XRAYVERSION=`xray --version | head -n 1 | cut -c 1-11`
 V2RAYVERSION=`v2ray version | head -n 1 | cut -c 1-12`
-echo -e "${BLUE} $XRAYVERSION${NC} "\|" ${GREEN} $V2RAYVERSION ${NC}"
+echo -e "${YELLOW} $SSTPCVERSION${NC} "\|" ${BLUE} $XRAYVERSION${NC} "\|" ${GREEN} $V2RAYVERSION ${NC}"
+echo "-----------------------------------------------------"
+BADVPNVERSION=`badvpn-tun2socks --version`
+TUN2SOCKSVERSION=`tun2socks -version | head -n 1`
+LOADBALANCERVERSION=`load_balance.pl -V`
+echo -e "${YELLOW} $BADVPNVERSION${NC} "\|" ${BLUE} $TUN2SOCKSVERSION${NC} "\|" ${GREEN} Load Balancer $LOADBALANCERVERSION ${NC}"
 echo ""
 options=( "DHCP Server" "Install All Clients" "Install LoadBalancer" "Setup SSTP Client1" "Setup SSTP Client2" "Setup V2ray Client" "V2Ray Config" "XRay Config" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
