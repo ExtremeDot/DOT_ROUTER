@@ -45,12 +45,12 @@ CLIENT_FILE2=/sstp/client2.sh
 CLIENT_NAME2=`sed -n -e '/client_name/{s/.*= *//p}' $CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'`
 HTT1=`ip address show label $CLIENT_NAME1 | grep inet | awk '{print $2}'`
 HTT2=`ip address show label $CLIENT_NAME2 | grep inet | awk '{print $2}'`
-if [ -n "$HTT1" ] ; then echo -e "${GREEN}$CLIENT_NAME1 [OK RUNNING]${NC} " ; else echo -e "${RED}$CLIENT_NAME1 [NOT RUNNING]${NC}" ; fi
-if [ -n "$HTT2" ] ; then echo -e "${GREEN}$CLIENT_NAME2 [OK RUNNING]${NC} " ; else echo -e "${RED}$CLIENT_NAME2 [NOT RUNNING]${NC}" ; fi
+if [ -n "$HTT1" ] ; then echo -e "${GREEN}    $CLIENT_NAME1 [OK RUNNING]${NC} " ; else echo -e "${RED}    $CLIENT_NAME1 [NOT RUNNING]${NC}" ; fi
+if [ -n "$HTT2" ] ; then echo -e "${GREEN}    $CLIENT_NAME2 [OK RUNNING]${NC} " ; else echo -e "${RED}    $CLIENT_NAME2 [NOT RUNNING]${NC}" ; fi
 V2RAYSTATUS=`systemctl status v2ray | grep Active | cut -c 14-100`
 XRAYSTATUS=`systemctl status xray | grep Active | cut -c 14-100`
-echo "V2RAY: $V2RAYSTATUS"
-echo "XRAY: $V2RAYSTATUS"
+echo "    V2RAY: $V2RAYSTATUS"
+echo "    XRAY: $V2RAYSTATUS"
 
 echo ""
 options=( "DHCP Server" "Install All Clients" "Install LoadBalancer" "Setup SSTP Client1" "Setup SSTP Client2" "Setup V2ray Client" "V2Ray Config" "XRay Config" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
