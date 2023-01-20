@@ -19,15 +19,118 @@ echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.015 \033[0m "
 echo "----------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 echo ""
-options=( "DHCP Server" "Install SSTP Client" "Setup SSTP Client1" "Setup SSTP Client2" "CLEAR" "UPDATE" "Quit")
+options=( "DHCP Server" "Install All Clients" "Install LoadBalancer" "Setup SSTP Client1" "Setup SSTP Client2" "Setup V2ray Client" "V2Ray Config" "XRay Config" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
 do
 case $opt in
 
+"V2Ray Config")
+nano /usr/local/etc/v2ray/config.json
+;;
+
+"XRay Config")
+nano /usr/local/etc/xray/config.json
+;;
+
+
+"LoadBalancer Config")
+clear
+nano /etc/network/balance.conf
+;;
+
+#Installing LOAD BALANCER
+"Install LoadBalancer")
+apt-get install -y build-essential
+apt-get install -y perl
+mkdir -p /lb_dotrouter && cd /lb_dotrouter
+wget https://github.com/lstein/Net-ISP-Balance/archive/master.zip
+sleep 2
+unzip /lb_dotrouter/master.zip
+sleep 1
+cd /lb_dotrouter/Net-ISP-Balance-master
+cpan Module::Build
+sleep 1
+perl ./Build.PL
+sleep 1
+./Build installdeps
+sleep 1
+./Build test
+sleep 2
+sudo ./Build install
+echo ""
+echo "nano /etc/network/balance.conf to edit load balancer config"
+echo ""
+echo "load_balance.pl  -d > commands.sh "
+echo "run above command to have your custom loadbalancer by running commands.sh script"
+;;
+
 # INSTALLING SSTP CLIENT
-"Install SSTP Client")
+"Install All Clients")
+clear
+echo ""
+echo "Installing pre-req apps"
+apt install -y unzip
+apt install -y shadowsocks-libev
+apt install -y make cmake build-essential
+
+echo ""
+echo "Installing sstp latest apt"
 apt install sstp-client
+echo "sstp client installing has finished."
 sstpc --version
+
+echo ""
+echo "Installing v2ray,v2fly latest version"
+mkdir -p /v2rclient
+cd /v2rclient
+touch /v2rclient/info.txt
+echo "DotRouter v2ray client folder" > /v2rclient/info.txt
+echo ""
+echo "Installing latest V2Ray,V2fly clients"
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+echo ""
+echo "Updating Geo Files for V2ray Client"
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+sleep 2
+systemctl enable v2ray && sleep 2
+echo ""
+echo "Installing BADVPN " 
+mkdir -p /badvpn && cd /badvpn && wget https://github.com/ambrop72/badvpn/archive/refs/tags/1.999.130.zip
+sleep 2
+unzip /badvpn/1.999.130.zip && cd /badvpn/badvpn-1.999.130/
+sleep 2
+cmake -DBUILD_NOTHING_BY_DEFAULT=1 -DBUILD_TUN2SOCKS=1
+sleep 1
+make
+sleep 1
+make install
+sleep 1
+echo " badvpn finished ...."
+echo "" 
+echo "Installing tune2socks"
+mkdir -p /tun2s
+cd /tun2s
+wget https://github.com/xjasonlyu/tun2socks/releases/download/v2.4.1/tun2socks-linux-amd64.zip
+unzip tun2socks-linux-amd64.zip
+# 7z x tun2socks-linux-amd64.zip
+rm *.zip
+mv tun2socks-linux-amd64 /bin/tun2socks
+chmod +x /bin/tun2socks
+echo " finishing tun2socks ......"
+echo ""
+echp "Installing latest xray core"
+mkdir -p /xrayclient
+cd /xrayclient
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+sleep 2
+systemctl enable xray
+sleep 2
+echo ""
+echo "Updating geo files to latest"
+cd /xrayclient
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install-geodata
+echo " all client requirements has installed"
+
 ;;
 
 # SETTING UP SSTP CLIENT 1
