@@ -1,4 +1,5 @@
 #!/bin/bash
+clear
 DOTDIR=/dot_router
 mkdir -p $DOTDIR
 #IF DEF VALS ARE AVAILABLE
@@ -20,7 +21,7 @@ BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.025  "
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.026  "
 echo "======================================================"
 echo -e "${YELLOW} Application Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
@@ -107,11 +108,11 @@ echo -e "${BLUE}Ping to Google=$XRAYPING ${NC}" ; echo ""
 ;;
 
 
-"V2Ray Config")
+"V2Ray Config Editor")
 nano /usr/local/etc/v2ray/config.json
 ;;
 
-"XRay Config")
+"XRay Config Editor")
 nano /usr/local/etc/xray/config.json
 ;;
 
@@ -148,7 +149,7 @@ echo "run above command to have your custom loadbalancer by running commands.sh 
 ;;
 
 # INSTALLING SSTP CLIENT
-"Install All Clients")
+"Install All Clients, SSTP V2ray Xray BadVPN tun2socks")
 clear
 echo ""
 echo "Installing pre-req apps"
@@ -217,7 +218,7 @@ echo " all client requirements has installed"
 ;;
 
 # SETTING UP SSTP CLIENT 1
-"Setup SSTP Client1")
+"Setup SSTP Client Number 1")
 mkdir -p /sstp
 cd /sstp
 
@@ -316,7 +317,7 @@ fi
 
 ################################
 # SETTING UP SSTP CLIENT 2
-"Setup SSTP Client2")
+"Setup SSTP Client Number 2")
 mkdir -p /sstp
 cd /sstp
 
@@ -416,7 +417,7 @@ fi
 
 
 # DHCP SERVER
-"DHCP Server")
+"Installing DHCP Server")
 if test -f "/Golden1/dhcp-server.sh";
 then
 bash /Golden1/dhcp-server.sh
@@ -449,11 +450,13 @@ chmod +x /tmp/main.sh
 mv /tmp/main.sh /bin/dotrouter
 chmod +x /bin/dotrouter
 sleep 2
+clear
 bash /bin/dotrouter ; exit 0
 ;;
 
 # WRONG INPUT
 *) echo "invalid option $REPLY"
+
 ;;
 esac
 
