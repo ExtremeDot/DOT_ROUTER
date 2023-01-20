@@ -20,7 +20,7 @@ BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.021 \033[0m "
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.022 \033[0m "
 echo "-----------------------------------------------------"
 echo "Application Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
@@ -51,9 +51,9 @@ V2RAYSTATUS=`systemctl status v2ray | grep Active | cut -c 14-100`
 XRAYSTATUS=`systemctl status xray | grep Active | cut -c 14-100`
 echo "    V2RAY: $V2RAYSTATUS"
 echo "    XRAY: $V2RAYSTATUS"
-
+echo "-----------------------------------------------------"
 echo ""
-options=( "DHCP Server" "Install All Clients" "Install LoadBalancer" "Setup SSTP Client1" "Setup SSTP Client2" "Setup V2ray Client" "V2Ray Config" "XRay Config" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
+options=( "Installing DHCP Server" "Install All Clients, SSTP V2ray Xray BadVPN tun2socks" "Install LoadBalancer" "Setup SSTP Client Number 1" "Setup SSTP Client Number 2" "Setup V2ray Client" "V2Ray Config Editor" "XRay Config Editor" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
 do
 case $opt in
