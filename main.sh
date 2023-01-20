@@ -20,9 +20,9 @@ BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.022 \033[0m "
-echo "======================================================"
-echo "Application Status"
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.023  "
+echo "====================================================== \033[0m"
+echo -e "${YELLOW} Application Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 SSTPCVERSION=`sstpc -version | head -n 1`
 XRAYVERSION=`xray --version | head -n 1`
@@ -30,14 +30,14 @@ V2RAYVERSION=`v2ray version | head -n 1`
 BADVPNVERSION=`badvpn-tun2socks --version | head -n 1`
 TUN2SOCKSVERSION=`tun2socks -version | head -n 1`
 LOADBALANCERVERSION=`load_balance.pl -V`
-echo -e "${YELLOW}    $SSTPCVERSION${NC} "
-echo -e "${BLUE}    $XRAYVERSION${NC}"
-echo -e "${GREEN}    $V2RAYVERSION ${NC}"
-echo -e "${YELLOW}    $BADVPNVERSION${NC}"
-echo -e "${BLUE}    $TUN2SOCKSVERSION${NC}"
-echo -e "${GREEN}    Load Balancer $LOADBALANCERVERSION ${NC}"
-echo "-----------------------------------------------------"
-echo "Clients Status"
+echo -e "${GREEN}    $SSTPCVERSION${NC} "
+echo -e "    $XRAYVERSION"
+echo -e "    $V2RAYVERSION"
+echo -e "    $BADVPNVERSION"
+echo -e "    $TUN2SOCKSVERSION"
+echo -e "    Load Balancer $LOADBALANCERVERSION ${NC}"
+echo "    -------------------------------------------------"
+echo -e "${YELLOW} Clients Status"
 #SSTP1
 CLIENT_FILE1=/sstp/client1.sh
 CLIENT_NAME1=`sed -n -e '/client_name/{s/.*= *//p}' $CLIENT_FILE1 | sed  's/.*"\(.*\)".*/\1/'`
@@ -49,9 +49,9 @@ if [ -n "$HTT1" ] ; then echo -e "${GREEN}    $CLIENT_NAME1 [OK RUNNING]${NC} " 
 if [ -n "$HTT2" ] ; then echo -e "${GREEN}    $CLIENT_NAME2 [OK RUNNING]${NC} " ; else echo -e "${RED}    $CLIENT_NAME2 [NOT RUNNING]${NC}" ; fi
 V2RAYSTATUS=`systemctl status v2ray | grep Active | cut -c 14-100`
 XRAYSTATUS=`systemctl status xray | grep Active | cut -c 14-100`
-echo "    V2RAY: $V2RAYSTATUS"
-echo "    XRAY: $V2RAYSTATUS"
-echo "-----------------------------------------------------"
+echo -e "${GREEN}    V2RAY: $V2RAYSTATUS"
+echo -e "${GREEN}    XRAY: $V2RAYSTATUS"
+echo " ---------------------------------------------------"
 echo ""
 options=( "Installing DHCP Server" "Install All Clients, SSTP V2ray Xray BadVPN tun2socks" "Install LoadBalancer" "Setup SSTP Client Number 1" "Setup SSTP Client Number 2" "Setup V2ray Client" "V2Ray Config Editor" "XRay Config Editor" "LoadBalancer Config" "CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
