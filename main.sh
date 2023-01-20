@@ -13,14 +13,14 @@ PINGTXT1=\`echo "-- PING Check: -----------------------------------------------"
 INTFTXT1=\`echo "-- INTERFACE Check: -----------------------------------------------" | cut -c 1-45\`
 
 EOF
-YELLOW="\[\033[0;33m\]"	# YELLOW
+YELLOW=`\033[0;33m`	# YELLOW
 RED='\033[0;31m'        # Red
 BLUE='\033[1;34m'       # LIGHTBLUE
 GREEN='\033[0;32m'      # Green
 
 NC='\033[0m'            # No Color
 clear
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.017 \033[0m "
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R  - Version:1.018 \033[0m "
 echo "-----------------------------------------------------"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 SSTPCVERSION=`sstpc -version`
@@ -28,7 +28,7 @@ XRAYVERSION=`xray --version | head -n 1 | cut -c 1-11`
 V2RAYVERSION=`v2ray version | head -n 1 | cut -c 1-12`
 echo -e "${YELLOW} $SSTPCVERSION${NC} "\|" ${BLUE} $XRAYVERSION${NC} "\|" ${GREEN} $V2RAYVERSION ${NC}"
 echo "-----------------------------------------------------"
-BADVPNVERSION=`badvpn-tun2socks --version`
+BADVPNVERSION=`badvpn-tun2socks --version | head -n 1`
 TUN2SOCKSVERSION=`tun2socks -version | head -n 1`
 LOADBALANCERVERSION=`load_balance.pl -V`
 echo -e "${YELLOW} $BADVPNVERSION${NC} "\|" ${BLUE} $TUN2SOCKSVERSION${NC} "\|" ${GREEN} Load Balancer $LOADBALANCERVERSION ${NC}"
@@ -379,7 +379,8 @@ curl -H 'Cache-Control: no-cache, no-store' -O https://raw.githubusercontent.com
 chmod +x /tmp/main.sh
 mv /tmp/main.sh /bin/dotrouter
 chmod +x /bin/dotrouter
-exit 0
+sleep 2
+bash /bin/dotrouter $ exit 0
 ;;
 
 # WRONG INPUT
