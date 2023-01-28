@@ -54,7 +54,21 @@ echo -e "${GREEN}    V2RAY: $V2RAYSTATUS"
 echo -e "${GREEN}    XRAY: $V2RAYSTATUS ${NC}"
 echo " ----------------------------------------------------"
 echo ""
-options=( "Installing DHCP Server" "Install All Clients, SSTP V2ray Xray BadVPN tun2socks" "Install LoadBalancer" "Setup SSTP Client Number 1" "Setup SSTP Client Number 2" "Setup V2ray Client" "V2Ray Config Editor" "XRay Config Editor" "LoadBalancer Config" "SSTP1-CHECK" "SSTP2-CHECK" "V2RAY-CHECK" "XRAY-CHECK" "CLEAR" "UPDATE" "Quit")
+options=(
+"Installing DHCP Server"
+"Install All Clients, SSTP V2ray Xray BadVPN tun2socks"
+"Install LoadBalancer" 
+"Setup SSTP Client Number 1" 
+"Setup SSTP Client Number 2" 
+"Setup V2ray Client" 
+"V2Ray Config Editor" 
+"XRay Config Editor" 
+"LoadBalancer Config" 
+"SSTP1-CHECK" 
+"SSTP2-CHECK" 
+"V2RAY-CHECK" 
+"XRAY-CHECK" 
+"CLEAR" "UPDATE" "Quit")
 select opt in "${options[@]}"
 do
 case $opt in
@@ -156,6 +170,7 @@ echo "Installing pre-req apps"
 apt install -y unzip
 apt install -y shadowsocks-libev
 apt install -y make cmake build-essential
+apt-get install -y iptables-persistent
 
 echo ""
 echo "Installing sstp latest apt"
