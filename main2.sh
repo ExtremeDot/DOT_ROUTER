@@ -541,7 +541,7 @@ mv /tmp/main2.sh /bin/Dotrouter
 chmod +x /bin/Dotrouter
 sleep 2
 clear
-bash /bin/dotrouter ; exit 0
+bash /bin/Dotrouter ; exit 0
 ;;
 
 # WRONG INPUT
