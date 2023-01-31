@@ -3,7 +3,7 @@ clear
 #DOTDIR=/dot_router
 DOTDIR=/ExtremeDOT/Router
 mkdir -p $DOTDIR
-DOTROUTERVERSION=1.032
+DOTROUTERVERSION=1.033
 
 #IF DEF VALS ARE AVAILABLE
 touch $DOTDIR/common.sh
@@ -74,7 +74,8 @@ fi
 if [ $(dpkg-query -W -f='${Status}' load_balance.pl 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
 LOADBALANCERVERSION="${RED}Load Balancer has not installed${NC}"
 else
-LOADBALANCERVERSION=`load_balance.pl -V`
+LOADBALANCERVER=`load_balance.pl -V`
+LOADBALANCERVERSION="${GREEN}Load Balancer $LOADBALANCERVER ${NC}"
 fi
 
 echo -e "${GREEN}    $SSTPCVERSION "
@@ -82,7 +83,7 @@ echo -e "    $XRAYVERSION"
 echo -e "    $V2RAYVERSION"
 echo -e "    $BADVPNVERSION"
 echo -e "    $TUN2SOCKSVERSION"
-echo -e "    Load Balancer $LOADBALANCERVERSION ${NC}"
+echo -e "    $LOADBALANCERVERSION ${NC}"
 echo " ----------------------------------------------------"
 echo -e "${YELLOW} Clients Status${NC}"
 
