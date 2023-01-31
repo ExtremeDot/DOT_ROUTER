@@ -3,7 +3,7 @@ clear
 #DOTDIR=/dot_router
 DOTDIR=/ExtremeDOT/Router
 mkdir -p $DOTDIR
-DOTROUTERVERSION=1.030
+DOTROUTERVERSION=1.032
 
 #IF DEF VALS ARE AVAILABLE
 touch $DOTDIR/common.sh
@@ -33,42 +33,46 @@ PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
 
 # SSTP VERSION
 if [ $(dpkg-query -W -f='${Status}' sstpc 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-SSTPCVERSION="SSTP Client has not installed"
+SSTPCVERSION="${RED}SSTP Client has not installed${NC}"
 else
 SSTPCVERSION=`sstpc -version | head -n 1`
 fi
 
 # XRAY VERSION
 if [ $(dpkg-query -W -f='${Status}' xray 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-XRAYVERSION="XRAY Clienthas not installed"
+XRAYVERSION="${RED}XRAY Client has not installed${NC}"
+XRAYST=0
 else
 XRAYVERSION=`xray -version | head -n 1`
+XRAYST=1
 fi
 
 # V2RAY VERSION
 if [ $(dpkg-query -W -f='${Status}' v2ray 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-V2RAYVERSION="V2RAY Client has not installed"
+V2RAYVERSION="${RED}V2RAY Client has not installed${NC}"
+V2RAYST=0
 else
 V2RAYVERSION=`v2ray -version | head -n 1`
+V2RAYST=1
 fi
 
 # BADVPN TUN2SOCKS VERSION
 if [ $(dpkg-query -W -f='${Status}' badvpn-tun2socks 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-BADVPNVERSION="BADVPN-TUN2SOCKS has not installed"
+BADVPNVERSION="${RED}BADVPN-TUN2SOCKS has not installed${NC}"
 else
 BADVPNVERSION=`badvpn-tun2socks -version | head -n 1`
 fi
 
 # TUN2SOCKS VERSION
 if [ $(dpkg-query -W -f='${Status}' tun2socks 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-TUN2SOCKSVERSION="TUN2SOCKS has not installed"
+TUN2SOCKSVERSION="${RED}TUN2SOCKS has not installed${NC}"
 else
 TUN2SOCKSVERSION=`tun2socks -version | head -n 1`
 fi
 
 # LOAD BALANCER VERSION
 if [ $(dpkg-query -W -f='${Status}' load_balance.pl 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
-LOADBALANCERVERSION="Load Balancer has not installed"
+LOADBALANCERVERSION="${RED}Load Balancer has not installed${NC}"
 else
 LOADBALANCERVERSION=`load_balance.pl -V`
 fi
@@ -80,27 +84,49 @@ echo -e "    $BADVPNVERSION"
 echo -e "    $TUN2SOCKSVERSION"
 echo -e "    Load Balancer $LOADBALANCERVERSION ${NC}"
 echo " ----------------------------------------------------"
-echo -e "${YELLOW} Clients Status"
+echo -e "${YELLOW} Clients Status${NC}"
 
-#SSTP1
-
-CLIENT_FILE1=$DOTDIR/client1.sh
+#SSTP 1
+CLIENT_FILE1=$DOTDIR/sstp_client1.sh
+if test -f "$CLIENT_FILE1"; then
 CLIENT_NAME1=`sed -n -e '/client_name/{s/.*= *//p}' $CLIENT_FILE1 | sed  's/.*"\(.*\)".*/\1/'`
-
-CLIENT_FILE2=$DOTDIR/client2.sh
-CLIENT_NAME2=`sed -n -e '/client_name/{s/.*= *//p}' $CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'`
-
 HTT1=`ip address show label $CLIENT_NAME1 | grep inet | awk '{print $2}'`
-HTT2=`ip address show label $CLIENT_NAME2 | grep inet | awk '{print $2}'`
-
 if [ -n "$HTT1" ] ; then echo -e "${GREEN}    $CLIENT_NAME1 [OK RUNNING]${NC} " ; else echo -e "${RED}    $CLIENT_NAME1 [NOT RUNNING]${NC}" ; fi
+else
+NOSSTPCLIENT1="SSTP1: Not Configured"
+fi
+
+#SSTP 2
+CLIENT_FILE2=$DOTDIR/sstp_client2.sh
+if test -f "$CLIENT_FILE2"; then
+CLIENT_NAME2=`sed -n -e '/client_name/{s/.*= *//p}' $CLIENT_FILE2 | sed  's/.*"\(.*\)".*/\1/'`
+HTT2=`ip address show label $CLIENT_NAME2 | grep inet | awk '{print $2}'`
 if [ -n "$HTT2" ] ; then echo -e "${GREEN}    $CLIENT_NAME2 [OK RUNNING]${NC} " ; else echo -e "${RED}    $CLIENT_NAME2 [NOT RUNNING]${NC}" ; fi
+else
+NOSSTPCLIENT2="SSTP2: Not Configured"
+fi
+echo -e "${RED}    $NOSSTPCLIENT1    $NOSSTPCLIENT2 ${NC}"
 
+#V2RAY STATUS
+V2RAYCLIENTFl=/usr/local/etc/v2ray/config.json
+if test -f "$V2RAYCLIENTFl"; then
 V2RAYSTATUS=`systemctl status v2ray | grep Active | cut -c 14-100`
-XRAYSTATUS=`systemctl status xray | grep Active | cut -c 14-100`
+echo -e "${GREEN}    V2RAY: $V2RAYSTATUS${NC}"
+else
+V2RAYSTATUSFAIL="V2RAY: Not Configured"
+fi
 
-echo -e "${GREEN}    V2RAY: $V2RAYSTATUS"
+XRAYCLIENTFl=/usr/local/etc/xray/config.json
+if test -f "$XRAYCLIENTFl"; then
+XRAYSTATUS=`systemctl status xray | grep Active | cut -c 14-100`
 echo -e "${GREEN}    XRAY: $V2RAYSTATUS ${NC}"
+else
+XRAYSTATUSFAIL="XRAY: Not Configured"
+fi
+echo -e "${RED}    $XRAYSTATUSFAIL    $V2RAYSTATUSFAIL ${NC}"
+
+
+
 echo " ----------------------------------------------------"
 echo
 options=(
