@@ -534,12 +534,11 @@ fi
 # CLEAR SCREEN
 "UPDATE")
 cd /tmp
-rm /tmp/main.sh
 sleep 1
 curl -H 'Cache-Control: no-cache, no-store' -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main2.sh
-chmod +x /tmp/main.sh
+chmod +x /tmp/main2.sh
 mv /tmp/main2.sh /bin/Dotrouter
-chmod +x /bin/dotrouter
+chmod +x /bin/Dotrouter
 sleep 2
 clear
 bash /bin/dotrouter ; exit 0
