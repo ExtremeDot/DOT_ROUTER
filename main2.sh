@@ -84,7 +84,7 @@ echo -e "    $V2RAYVERSION"
 echo -e "    $BADVPNVERSION"
 echo -e "    $TUN2SOCKSVERSION"
 echo -e "    $LOADBALANCERVERSION ${NC}"
-echo " ----------------------------------------------------"
+echo
 echo -e "${YELLOW} Clients Status${NC}"
 
 #SSTP 1
