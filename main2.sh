@@ -124,7 +124,7 @@ echo -e "${GREEN}    XRAY: $V2RAYSTATUS ${NC}"
 else
 XRAYSTATUSFAIL="XRAY: Not Configured"
 fi
-echo -e "${RED}    $XRAYSTATUSFAIL    $V2RAYSTATUSFAIL ${NC}"
+echo -e "${RED}    $XRAYSTATUSFAIL     $V2RAYSTATUSFAIL ${NC}"
 
 
 
