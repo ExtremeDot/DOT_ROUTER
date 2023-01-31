@@ -16,9 +16,7 @@ mv /tmp/main.sh /bin/dotrouter && chmod +x /bin/dotrouter
 * Installing Linux UBUNTU 22.12 on USB FLASH DISK
 - after installing of ubuntu has finishs
 
-```sh
-sudo -i
-```
+
 get root access,enter your password 
 
 ```sh
