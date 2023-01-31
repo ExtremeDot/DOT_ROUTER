@@ -3,6 +3,7 @@ clear
 #DOTDIR=/dot_router
 DOTDIR=/ExtremeDOT/Router
 mkdir -p $DOTDIR
+DOTROUTERVERSION=1.030
 
 #IF DEF VALS ARE AVAILABLE
 touch $DOTDIR/common.sh
@@ -24,16 +25,54 @@ GREEN='\033[0;32m'      # Green
 NC='\033[0m'            # No Color
 clear
 
-echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:1.027  "
+echo -e "\033[0;31m G O L D E N   D O T   R O U T E R      Version:$DOTROUTERVERSION  "
 echo "======================================================"
-echo -e "${YELLOW} Application Status"
+echo
+echo -e "${YELLOW}Applications Status"
 PS3=" $(echo $'\n'-----------------------------$'\n' "   Enter Option: " ) "
+
+# SSTP VERSION
+if [ $(dpkg-query -W -f='${Status}' sstpc 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+SSTPCVERSION="SSTP Client has not installed"
+else
 SSTPCVERSION=`sstpc -version | head -n 1`
-XRAYVERSION=`xray --version | head -n 1`
-V2RAYVERSION=`v2ray version | head -n 1`
-BADVPNVERSION=`badvpn-tun2socks --version | head -n 1`
+fi
+
+# XRAY VERSION
+if [ $(dpkg-query -W -f='${Status}' xray 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+XRAYVERSION="XRAY Clienthas not installed"
+else
+XRAYVERSION=`xray -version | head -n 1`
+fi
+
+# V2RAY VERSION
+if [ $(dpkg-query -W -f='${Status}' v2ray 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+V2RAYVERSION="V2RAY Client has not installed"
+else
+V2RAYVERSION=`v2ray -version | head -n 1`
+fi
+
+# BADVPN TUN2SOCKS VERSION
+if [ $(dpkg-query -W -f='${Status}' badvpn-tun2socks 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+BADVPNVERSION="BADVPN-TUN2SOCKS has not installed"
+else
+BADVPNVERSION=`badvpn-tun2socks -version | head -n 1`
+fi
+
+# TUN2SOCKS VERSION
+if [ $(dpkg-query -W -f='${Status}' tun2socks 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+TUN2SOCKSVERSION="TUN2SOCKS has not installed"
+else
 TUN2SOCKSVERSION=`tun2socks -version | head -n 1`
+fi
+
+# LOAD BALANCER VERSION
+if [ $(dpkg-query -W -f='${Status}' load_balance.pl 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+LOADBALANCERVERSION="Load Balancer has not installed"
+else
 LOADBALANCERVERSION=`load_balance.pl -V`
+fi
+
 echo -e "${GREEN}    $SSTPCVERSION "
 echo -e "    $XRAYVERSION"
 echo -e "    $V2RAYVERSION"
@@ -470,9 +509,9 @@ fi
 cd /tmp
 rm /tmp/main.sh
 sleep 1
-curl -H 'Cache-Control: no-cache, no-store' -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main.sh
+curl -H 'Cache-Control: no-cache, no-store' -O https://raw.githubusercontent.com/ExtremeDot/DOT_ROUTER/master/main2.sh
 chmod +x /tmp/main.sh
-mv /tmp/main.sh /bin/dotrouter
+mv /tmp/main2.sh /bin/Dotrouter
 chmod +x /bin/dotrouter
 sleep 2
 clear
