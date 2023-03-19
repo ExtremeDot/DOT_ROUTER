@@ -16,6 +16,10 @@
 
 ***
 
+### Config Network
+
+Add DHCP v4 to get IP
+
 ![image](https://user-images.githubusercontent.com/120102306/226155822-454c4f06-3047-420d-8b01-098f2515ff69.png)
 
 
